@@ -7,20 +7,25 @@ variables:
 
 steps:
 
-  - task: AdvancedSecurity-Codeql-Init@1
-    inputs:
-      languages: "java"
-      # Supported languages: csharp, cpp, go, java, javascript, python, ruby, swift
-      # You can customize the initialize task: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/advanced-security-codeql-init-v1?view=azure-pipelines
-      # If you're using a self-hosted agent to run CodeQL, use `enableAutomaticCodeQLInstall` to automatically use the latest CodeQL bits on your agent:
-      enableAutomaticCodeQLInstall: true
-
+  - script: |
+      mvn install -DskipTests
+    displayName: 'Maven install and test'
+    
   - script: |
       echo Starting the build
       mvn clean package -DskipTests
     displayName: 'Build with Maven'
 
-
-  - task: AdvancedSecurity-Dependency-Scanning@1 # More details on this task: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/advanced-security-dependency-scanning-v1?view=azure-pipelines
-
-  - task: AdvancedSecurity-Codeql-Analyze@1 # More details on this task: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/advanced-security-codeql-analyze-v1?view=azure-pipelines
+  - script: |
+      wget https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.20.3/codeql-bundle-linux64.tar.gz
+      tar -xzf codeql-bundle-linux64.tar.gz
+      chmod +x codeql/codeql
+    displayName: 'Get latest CodeQL package. Install on Agent.'
+    
+  - script: |
+      ./codeql-runner-linux init --repository ZacharyZurloMSFT/GHAS-Demo-Ado --github-url https://github.com --github-auth $(GITHUB_PAT)
+    displayName: 'Initialize CodeQ Executable and create a CodeQL database'
+  
+  - script: |
+      ./codeql-runner-linux analyze --repository ZacharyZurloMSFT/GHAS-Demo-Ado --github-url https://github.com --github-auth $(GITHUB_PAT) --commit 92065de8b22bbfeda511d12571b66c9969ff593b --ref refs/heads/master
+    displayName: 'Populate the CodeQL runner databases, analyze them, and upload the results to GitHub.'
