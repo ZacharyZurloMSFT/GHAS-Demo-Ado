@@ -12,10 +12,12 @@ steps:
       chmod +x codeql/codeql
     displayName: 'Get latest CodeQL package. Install on Agent.'
 
-
+  - script: |
+      mkdir -p codeql_databases/java
+    displayName: 'Create CodeQL database directory'
 
   - script: |
-      ./codeql/codeql database init --language=java --source-root= . 
+      ./codeql/codeql database init codeql_databases/java --language=java --source-root= . 
     displayName: 'Initialize CodeQL Executable and create a CodeQL database'
 
 
