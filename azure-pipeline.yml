@@ -6,6 +6,17 @@ variables:
 - group: GHAS-Variables
 
 steps:
+  - task: UseJavaVersion@1
+    inputs:
+      versionSpec: '11'
+      jdkArchitectureOption: 'x64'
+    displayName: 'Set up JDK 11'
+
+  - script: |
+      mvn install
+      mvn test
+        displayName: 'Maven install and test'
+    
   - script: |
       echo Starting the build
       mvn clean package -DskipTests
