@@ -13,7 +13,7 @@ steps:
     displayName: 'Get latest CodeQL package. Install on Agent.'
 
   - script: |
-      ./codeql/codeql database init codeql_databases/java --language=java --source-root=. --github-auth-stdin $(GITHUB_PAT) --github-url https://github.com/ZacharyZurloMSFT/GHAS-Demo-Ado
+      ./codeql/codeql database init codeql_databases/java --language=java --source-root=. 
     displayName: 'Initialize CodeQL Executable and create a CodeQL database'
 
   - script: |
