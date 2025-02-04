@@ -32,3 +32,5 @@ steps:
   - script: |
       ./codeql/codeql github upload-results --repository=ZacharyZurloMSFT/GHAS-Demo-Ado --ref=$(Build.SourceBranch) --commit=$(Build.SourceVersion) --sarif=analysis-results.sarif
     displayName: 'Upload the results to GitHub.'
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
