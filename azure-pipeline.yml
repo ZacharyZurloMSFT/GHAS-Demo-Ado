@@ -15,7 +15,7 @@ steps:
 
 
   - script: |
-      ./codeql/codeql database init --language=java --source-root= . --begin-tracing db
+      ./codeql/codeql database init --language=java --source-root= . 
     displayName: 'Initialize CodeQL Executable and create a CodeQL database'
 
 
