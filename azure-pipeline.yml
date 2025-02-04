@@ -23,9 +23,9 @@ steps:
     displayName: 'Get latest CodeQL package. Install on Agent.'
     
   - script: |
-      ./codeql-runner-linux init --repository ZacharyZurloMSFT/GHAS-Demo-Ado --github-url https://github.com --github-auth $(GITHUB_PAT)
-    displayName: 'Initialize CodeQ Executable and create a CodeQL database'
+      ./codeql/codeql database init codeql_databases/java --language=java --source-root=. --github-auth $(GITHUB_PAT) --github-url https://github.com/ZacharyZurloMSFT/GHAS-Demo-Ado
+    displayName: 'Initialize CodeQL Executable and create a CodeQL database'
   
   - script: |
-      ./codeql-runner-linux analyze --repository ZacharyZurloMSFT/GHAS-Demo-Ado --github-url https://github.com --github-auth $(GITHUB_PAT) --commit 92065de8b22bbfeda511d12571b66c9969ff593b --ref refs/heads/master
+      ./codeql/codeql database analyze codeql_databases/java path/to/queries --format=sarif-latest --output=analysis-results.sarif --github-auth $(GITHUB_PAT) --github-url https://github.com/ZacharyZurloMSFT/GHAS-Demo-Ado
     displayName: 'Populate the CodeQL runner databases, analyze them, and upload the results to GitHub.'
