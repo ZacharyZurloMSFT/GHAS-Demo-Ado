@@ -12,13 +12,13 @@ steps:
       chmod +x codeql/codeql
     displayName: 'Get latest CodeQL package. Install on Agent.'
 
-  - script: |
-      ./codeql/codeql database init codeql_databases/java --language=java --source-root=. 
-    displayName: 'Initialize CodeQL Executable and create a CodeQL database'
+
 
   - script: |
-      mvn install -DskipTests
-    displayName: 'Maven install and test'
+      ./codeql/codeql database init --language=java --source-root= . --begin-tracing db
+    displayName: 'Initialize CodeQL Executable and create a CodeQL database'
+
+
     
   - script: |
       echo Starting the build
