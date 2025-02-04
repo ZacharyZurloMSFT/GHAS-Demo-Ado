@@ -17,7 +17,7 @@ steps:
     displayName: 'Create CodeQL database directory'
 
   - script: |
-      ./codeql/codeql database init codeql_databases/java --language=java --source-root=. 
+      ./codeql/codeql database init codeql_databases/java --language=java --source-root=$(Build.SourcesDirectory)
     displayName: 'Initialize CodeQL Executable and create a CodeQL database'
 
 
