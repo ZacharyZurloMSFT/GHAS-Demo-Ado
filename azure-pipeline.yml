@@ -30,5 +30,7 @@ steps:
     displayName: 'Populate the CodeQL runner databases, analyze them'  
   
   - script: |
-      ./codeql/codeql github upload-results --repository=ZacharyZurloMSFT/GHAS-Demo-Ado --ref=$(Build.SourceBranch) --commit=$(Build.SourceVersion) --sarif=analysis-results.sarif --github-auth-stdin $(GITHUB_PAT)
+      ./codeql/codeql github upload-results --repository=ZacharyZurloMSFT/GHAS-Demo-Ado --ref=$(Build.SourceBranch) --commit=$(Build.SourceVersion) --sarif=analysis-results.sarif --github-auth-stdin
     displayName: 'Upload the results to GitHub.'
+    env:
+      GITHUB_PAT: $(GITHUB_PAT)
