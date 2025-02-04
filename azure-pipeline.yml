@@ -17,15 +17,9 @@ steps:
     displayName: 'Create CodeQL database directory'
 
   - script: |
-      ./codeql/codeql database init codeql_databases/java --language=java --source-root=$(Build.SourcesDirectory)
-    displayName: 'Initialize CodeQL Executable and create a CodeQL database'
-
-
-    
-  - script: |
-      echo Starting the build
-      mvn clean package -DskipTests
-    displayName: 'Build with Maven'
+      ./codeql/codeql database init --language=java --source-root=$(Build.SourcesDirectory) codeql_databases/java
+      ./codeql/codeql database trace-command codeql_databases/java -- mvn clean package -DskipTests
+    displayName: 'Initialize CodeQL database and build with Maven'
 
   - script: |
       ./codeql/codeql database finalize codeql_databases/java
