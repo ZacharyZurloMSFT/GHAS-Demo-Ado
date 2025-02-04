@@ -29,7 +29,10 @@ steps:
 
   - script: |
       ./codeql/codeql database finalize codeql_databases/java
-      ./codeql/codeql database analyze codeql_databases/java path/to/queries --format=sarif-latest --output=analysis-results.sarif
+    displayName: 'Finalize the CodeQL database'
+
+  - script: |
+      ./codeql/codeql database analyze codeql_databases/java --format=sarif-latest --output=analysis-results.sarif
     displayName: 'Populate the CodeQL runner databases, analyze them'  
   
   - script: |
