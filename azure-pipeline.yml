@@ -6,11 +6,6 @@ variables:
 - group: GHAS-Variables
 
 steps:
-  - task: UseJavaVersion@1
-    inputs:
-      versionSpec: '11'
-      jdkArchitectureOption: 'x64'
-    displayName: 'Set up JDK 11'
 
   - script: |
       mvn install
@@ -28,9 +23,9 @@ steps:
     displayName: 'Get latest CodeQL package. Install on Agent.'
     
   - script: |
-      ./codeql-runner-linux init --repository octodemo/ghas-azure-devops-code-scanning --github-url https://github.com --github-auth $(GITHUB_PAT)
+      ./codeql-runner-linux init --repository ZacharyZurloMSFT/GHAS-Demo-Ado --github-url https://github.com --github-auth $(GITHUB_PAT)
     displayName: 'Initialize CodeQ Executable and create a CodeQL database'
   
   - script: |
-      ./codeql-runner-linux analyze --repository octodemo/ghas-azure-devops-code-scanning --github-url https://github.com --github-auth $(GITHUB_PAT) --commit 92065de8b22bbfeda511d12571b66c9969ff593b --ref refs/heads/master
+      ./codeql-runner-linux analyze --repository ZacharyZurloMSFT/GHAS-Demo-Ado --github-url https://github.com --github-auth $(GITHUB_PAT) --commit 92065de8b22bbfeda511d12571b66c9969ff593b --ref refs/heads/master
     displayName: 'Populate the CodeQL runner databases, analyze them, and upload the results to GitHub.'
